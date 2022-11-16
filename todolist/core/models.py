@@ -1,3 +1,8 @@
-from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
+class User(AbstractUser):
+    pass
+    # эта константа содержит список с полями,
+    # которые необходимо заполнить при создании пользователя
+ #   REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
