@@ -5,4 +5,4 @@ class User(AbstractUser):
     pass
     # эта константа содержит список с полями,
     # которые необходимо заполнить при создании пользователя
- #   REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
