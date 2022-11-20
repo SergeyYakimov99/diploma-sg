@@ -17,3 +17,6 @@ AbstractUser.
 - Добавили фильтры по полям
 - Скрыть поле Password.
 - Сделать поля неизменяемыми: Last login, Date joined.
+
+DZ-34.
+
