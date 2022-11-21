@@ -19,4 +19,8 @@ AbstractUser.
 - Сделать поля неизменяемыми: Last login, Date joined.
 
 DZ-34.
+Написали Dockerfile и docker-compose.yaml, запустили 4 контейнера.
+Создали специального пользователя deploy c правами администратора.
+  <adduser deploy>
+
 
