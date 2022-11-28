@@ -1,6 +1,9 @@
 
 from django.urls import path
 
+from . import views
+
+
 urlpatterns = [
-    path('core/', ),
+    path('signup', views.RegistrationVeiw.as_view(), name='signup'),
 ]
