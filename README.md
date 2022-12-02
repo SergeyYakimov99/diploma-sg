@@ -51,3 +51,6 @@ DZ-35.
 Добавили функцию authenticate и функцию login.
 Реализовали получение/обновление текущего пользователя и logout.
 Реализовать смену пароля. Для реализации этого метода использовали UpdateAPIView.
+Добавили библиотеку python social auth в проект и необходимые параметры в конфиг.
+Добавили urls в todolist/urls.py:
+path("oauth/", include("social_django.urls", namespace="social"))
