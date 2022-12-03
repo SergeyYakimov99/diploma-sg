@@ -29,8 +29,8 @@ jobs:
       - name: render configs
         run: |
           mkdir deploy
-          cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
-          cat .env | envsubst > deploy/.env
+          cat docker-compose-ci.yaml | envsubst > skypro/docker-compose.yaml
+          cat .env | envsubst > skypro/.env
 
       - name: clone files to server
         uses: appleboy/scp-action@master
@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          source: "deploy/docker-compose.yaml,deploy/.env"
+          source: "skypro/docker-compose.yaml,skypro/.env"
           target: "todolist"
           strip_components: 1
       - name: deploy app
@@ -49,5 +49,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd todolist
-            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose down
-            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up --build -d
+            docker-compose down
+            docker-compose up --build -d
