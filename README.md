@@ -54,3 +54,7 @@ DZ-35.
 Добавили библиотеку python social auth в проект и необходимые параметры в конфиг.
 Добавили urls в todolist/urls.py:
 path("oauth/", include("social_django.urls", namespace="social"))
+
+DZ-36.
+Создали приложение goals и подключили в INSTALLED_APPS.
+
