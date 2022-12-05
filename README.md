@@ -57,4 +57,9 @@ path("oauth/", include("social_django.urls", namespace="social"))
 
 DZ-36.
 Создали приложение goals и подключили в INSTALLED_APPS.
+Создаем в файле models.py модель для категории и делаем миграции.
+Добавляем serializer и вьюхи для категории.
+Добавляем админку.
+Аналогично создали serializer и вьюхи для целей и каментов.
+
 
