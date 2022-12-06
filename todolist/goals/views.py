@@ -103,7 +103,7 @@ class GoalCommentListView(generics.ListAPIView):
         filters.OrderingFilter,
         filters.SearchFilter,
     ]
-    filterset_class = GoalDateFilter
+    # filterset_class = GoalDateFilter
     ordering_fields = ["goal"]
     ordering = ["-created"]
 
