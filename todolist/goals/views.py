@@ -60,6 +60,7 @@ class GoalListView(generics.ListAPIView):
     model = Goal
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
+    pagination_class = LimitOffsetPagination
     filter_backends = [
         DjangoFilterBackend,
         filters.OrderingFilter,
@@ -98,6 +99,7 @@ class GoalCommentListView(generics.ListAPIView):
     model = GoalComment
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCommentSerializer
+    pagination_class = LimitOffsetPagination
     filter_backends = [
         DjangoFilterBackend,
         filters.OrderingFilter,
