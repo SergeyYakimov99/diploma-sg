@@ -24,8 +24,7 @@ class GoalCategoryCreateSerializer(serializers.ModelSerializer):
         ).exists():
             raise serializers.ValidationError("Вы должны быть Владельцем или Редактором")
 
-
-
+        return value
 
 
 class GoalCategorySerializer(serializers.ModelSerializer):
@@ -38,6 +37,9 @@ class GoalCategorySerializer(serializers.ModelSerializer):
 
 
 class GoalCreateSerializer(serializers.ModelSerializer):
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=GoalCategory.objects.filter(is_deleted=False)
+    )
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     def validate_category(self, value: GoalCategory):
@@ -47,7 +49,11 @@ class GoalCreateSerializer(serializers.ModelSerializer):
         if value.user != self.context["request"].user:
             raise serializers.ValidationError("not owner of category")
 
-        if self.instance.category.board_id != value.board_id:
+        if not BoardParticipant.objects.filter(
+            board_id=value.board_id,
+            role__in=[BoardParticipant.Role.owner, BoardParticipant.Role.writer],
+            user=self.context["request"].user,
+        ).exists():
             raise serializers.ValidationError("Transfer between projects not allowed")
 
         return value
@@ -111,7 +117,7 @@ class BoardCreateSerializer(serializers.ModelSerializer):
 
 class BoardParticipantSerializer(serializers.ModelSerializer):
     role = serializers.ChoiceField(required=True, choices=BoardParticipant.Role.choices[1:])
-    serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
+    user = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
 
     class Meta:
         model = BoardParticipant
