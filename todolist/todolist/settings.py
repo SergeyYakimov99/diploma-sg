@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'core',
     'goals',
+    'bot',
 
     'rest_framework',
     'corsheaders',
