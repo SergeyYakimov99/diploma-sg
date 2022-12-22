@@ -1,6 +1,5 @@
 from django.urls import path
 
-#from todolist.goals import views
 from goals import views
 
 
