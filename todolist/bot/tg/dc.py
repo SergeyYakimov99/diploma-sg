@@ -2,8 +2,8 @@ from dataclasses import field
 from typing import List
 
 import marshmallow_dataclass
-from marshmallow_dataclass import dataclass
 from marshmallow import EXCLUDE
+from marshmallow_dataclass import dataclass
 
 
 @dataclass
@@ -12,7 +12,7 @@ class MessageFrom:
     is_bot: bool
     first_name: str | None
     last_name: str | None
-    username: str
+    username: str = ''
 
     class Meta:
         unknown = EXCLUDE
@@ -23,9 +23,9 @@ class MessageChat:
     id: int
     first_name: str | None
     last_name: str | None
-    username: str
     title: str | None
     type: str
+    username: str = ''
 
     class Meta:
         unknown = EXCLUDE
@@ -34,7 +34,7 @@ class MessageChat:
 @dataclass
 class Message:
     message_id: int
-    msg_from: MessageFrom = field(metadata={'data_key', 'from'})
+    msg_from: MessageFrom = field(metadata={'data_key': 'from'})
     chat: MessageChat
     date: int
     text: str | None
@@ -71,4 +71,4 @@ class SendMessageResponse:
 
 
 GET_UPDATES_SCHEMA = marshmallow_dataclass.class_schema(GetUpdatesResponse)()
-Send_Message_Response = marshmallow_dataclass.class_schema(SendMessageResponse)()
+SEND_MESSAGE_RESPONSE = marshmallow_dataclass.class_schema(SendMessageResponse)()
