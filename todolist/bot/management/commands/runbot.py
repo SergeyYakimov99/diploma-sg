@@ -1,8 +1,10 @@
 from django.core.management.base import BaseCommand
+from django.db.models import Q
 
 from bot.models import TgUser
 from bot.tg.client import TgClient
 from bot.tg.dc import Message
+from goals.models import Goal
 
 
 class Command(BaseCommand):
@@ -18,31 +20,41 @@ class Command(BaseCommand):
             text=f' {code}'
         )
 
-    def handle_user(self, msg: Message):
+    def handle_message(self, msg: Message):
         tg_user, created = TgUser.objects.get_or_create(
             tg_user_id=msg.msg_from.id,
             tg_chat_id=msg.chat.id
         )
-        if not created:
+        if created:
             tg_user.generate_verification_code()
-#            tg_user.save(update_fields=['verification_code'])
             self.tg_client.send_message(
                 chat_id=msg.chat.id,
                 text=f"Подтвердите свой аккаунт, введите код: {tg_user.verification_code} на сайте."
             )
+        elif msg.text == '/goals':
+            # goals = Goal.objects.select_related("user", "category__board").filter(
+            #     Q(category__board__participants__user_id=tg_user.user.id) & ~Q(status=Goal.Status.archived)
+            # )
+            goals = Goal.objects.filter(
+                category__board__participants__user=tg_user.user).exclude(status=Goal.Status.archived)
+            goals_list = '\n'.join([goal.title for goal in goals])
+            self.tg_client.send_message(
+                chat_id=msg.chat.id,
+                text=f'Список целей: \n{goals_list}'
+            )
         else:
             self.tg_client.send_message(
                 chat_id=msg.chat.id,
-                text=f"DDDDDDDDDD"
+                text=f"Неизвестная команда"
             )
 
     def handle(self, *args, **options):
         offset = 0
         while True:
             res = self.tg_client.get_updates(offset=offset)
- #           print(res)
             for item in res.result:
                 offset = item.update_id + 1
- #               self.tg_client.send_message(chat_id=item.message.chat.id, text=item.message.text)
-                self.handle_user(item.message)
-#                print(item.message)
+                if hasattr(item, 'message'):
+                    self.handle_message(item.message)
+
+

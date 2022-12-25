@@ -33,11 +33,9 @@ services:
       - .env2
     command: >
       bash -c 'python3 manage.py makemigrations && python3 manage.py migrate'
-#      sh -c "python ./manage.py migrate"
-#      sh -c "python3 ./todolist/manage.py migrate"
-#      sh -c "python3 manage.py makemigrations"
+
   db:
-    image: postgres:latest
+    image: postgres:14-alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

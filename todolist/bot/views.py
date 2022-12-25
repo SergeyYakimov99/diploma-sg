@@ -18,6 +18,8 @@ class BotVerifyView(generics.UpdateAPIView):
         tg_client = TgClient("5871475478:AAEIrz8pK8Ep7KUhI23AKAvkRIZAqcYjsAc")
         tg_user = TgUser.objects.filter(verification_code=data['verification_code']).first()
         if not tg_user:
+            # tg_user.user = request.user
+            # tg_client.send_message(chat_id=tg_user.tg_chat_id, text='Неверный код!')
             return Response(status=status.HTTP_400_BAD_REQUEST)
         tg_user.user = request.user
         tg_user.save()
