@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters, generics
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticated
 
 from goals.models import GoalCategory, Goal, Board
 from goals.filters import GoalDateFilter
@@ -15,6 +16,7 @@ from goals.serializers import GoalCategoryCreateSerializer, GoalCategorySerializ
 
 
 class GoalCategoryCreateView(CreateAPIView):
+    """ Создаем категорию для целей"""
     model = GoalCategory
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategoryCreateSerializer
@@ -31,7 +33,7 @@ class GoalCategoryListView(ListAPIView):
     ordering = ["title"]
     search_fields = ["title"]
 
-    def get_queryset(self):
+    def get_queryset(self) -> list[GoalCategory]:
         return GoalCategory.objects.prefetch_related("board__participants").filter(
             board__participants__user_id=self.request.user.id, is_deleted=False
         )
@@ -40,7 +42,7 @@ class GoalCategoryListView(ListAPIView):
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     model = GoalCategory
     serializer_class = GoalCategorySerializer
-    permission_classes = [GoalCategoryPermissions]  # IsOwnerOrReadOnly - add???
+    permission_classes = [GoalCategoryPermissions]
 
     def get_queryset(self):
         return GoalCategory.objects.prefetch_related("board__participants").filter(
@@ -57,7 +59,7 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
 
 class GoalCreateView(generics.CreateAPIView):
     model = Goal
-    permission_classes = [GoalPermissions]
+    permission_classes = [IsAuthenticated]
     serializer_class = GoalCreateSerializer
 
 
