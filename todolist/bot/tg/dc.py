@@ -3,7 +3,6 @@ from typing import List
 
 import marshmallow_dataclass
 from marshmallow import EXCLUDE
-#from marshmallow_dataclass import dataclass
 
 
 @dataclass
@@ -19,7 +18,7 @@ class MessageFrom:
 
 
 @dataclass
-#class MessageChat:
+# class MessageChat:
 class Chat:
     id: int
     first_name: str | None

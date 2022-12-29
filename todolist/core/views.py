@@ -14,17 +14,6 @@ class RegistrationView(generics.CreateAPIView):
     serializer_class = RegistrationSerializer
 
 
-# class LoginView(generics.GenericAPIView):
-#     serializer_class = LoginSerializer
-#
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.save()
-#         login(request=request, user=user)
-#         return Response(serializer.data)
-
-
 class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
 
@@ -35,6 +24,7 @@ class LoginView(GenericAPIView):
         login(request, user=user)
         user_serializer = ProfileSerializer(instance=user)
         return Response(user_serializer.data)
+
 
 class ProfileView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer

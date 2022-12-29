@@ -1,10 +1,7 @@
-
 import factory.fuzzy
 from django.contrib.auth import get_user_model
 
-from core.models import User
 from goals.models import GoalCategory, Board, Goal, GoalComment, BoardParticipant
-
 
 USER_MODEL = get_user_model()
 
@@ -47,9 +44,7 @@ class GoalFactory(factory.django.DjangoModelFactory):
         model = Goal
 
     title = factory.Faker('name')
-#    board = factory.SubFactory(BoardFactory)
     user = factory.SubFactory(UserFactory)
- #   category = factory.SubFactory(CategoryFactory)
 
 
 class CommentFactory(factory.django.DjangoModelFactory):

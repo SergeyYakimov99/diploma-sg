@@ -1,8 +1,8 @@
 import json
 
-from rest_framework.test import APIClient
 import pytest
 from django.urls import reverse
+from rest_framework.test import APIClient
 
 from core.models import User
 from goals.models import GoalCategory, Goal

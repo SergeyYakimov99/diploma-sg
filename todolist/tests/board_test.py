@@ -6,8 +6,7 @@ from rest_framework.test import APIClient
 
 from core.models import User
 from goals.models import Board, BoardParticipant
-from goals.serializers import BoardSerializer, BoardListSerializer
-from tests.factories import BoardFactory, BoardParticipantFactory
+from goals.serializers import BoardSerializer
 
 
 @pytest.mark.django_db
@@ -28,8 +27,6 @@ def test_create(auth_user: APIClient, board: Board) -> None:
 
     assert response.status_code == 201
     assert response.data == expected_response
-
-
 
 
 @pytest.mark.django_db

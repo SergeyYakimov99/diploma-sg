@@ -1,14 +1,10 @@
 import pytest
-from pytest_factoryboy import register
-
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from core.models import User
 from goals.models import Board, BoardParticipant, GoalCategory, Goal, GoalComment
-from tests import factories
 from tests.factories import (
-    UserFactory,
     BoardFactory,
     BoardParticipantFactory,
     CategoryFactory,
@@ -16,13 +12,7 @@ from tests.factories import (
     CommentFactory,
 )
 
-
 USER_MODEL = get_user_model()
-
-# register(factory_class=factories.UserFactory, _name='user')
-# register(factory_class=factories.BoardFactory, _name='board')
-# register(factory_class=factories.GoalCategory, _name='category')
-# register(factory_class=factories.BoardParticipantFactory, _name='board_participant')
 
 
 @pytest.fixture
