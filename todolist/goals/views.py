@@ -40,6 +40,9 @@ class GoalCategoryListView(ListAPIView):
 
 
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
+    """
+    Создание категории для цели
+    """
     model = GoalCategory
     serializer_class = GoalCategorySerializer
     permission_classes = [GoalCategoryPermissions]
@@ -95,6 +98,9 @@ class GoalView(generics.RetrieveUpdateDestroyAPIView):
         )
 
     def perform_destroy(self, instance: Goal):
+        """
+        При удалении цели у нее меняется поле статус на "В архиве"
+        """
         instance.status = Goal.Status.archived
         instance.save(update_fields=("status",))
         return instance
@@ -164,7 +170,7 @@ class BoardView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_destroy(self, instance: Board):
         # При удалении доски помечаем ее как is_deleted,
-        # «удаляем» категории, обновляем статус целей
+        # «удаляем» в архив категории, обновляем статус связанных целей на архивные
         with transaction.atomic():
             instance.is_deleted = True
             instance.save(update_fields=("is_deleted",))
