@@ -7,15 +7,24 @@ class TgClient:
     def __init__(self, token):
         self.token = token
 
-    def get_url(self, method: str):
+    def get_url(self, method: str) -> str:
         """
             URL метод для запроса к telegram боту
+        Args:
+            method: какой запрос будет отправлен боту
+        Returns:
+            str
         """
         return f'https://api.telegram.org/bot{self.token}/{method}'
 
     def get_updates(self, offset: int = 0, timeout: int = 60) -> GetUpdatesResponse:
         """
             Получения входящих обновлений от пользователя.
+        Args:
+            offset: int
+            timeout: int
+        Returns:
+            GetUpdatesResponse
         """
 
         url = self.get_url('getUpdates')
@@ -25,6 +34,11 @@ class TgClient:
     def send_message(self, chat_id: int, text: str) -> SendMessageResponse:
         """
             Отправление сообщения пользователю от бота.
+        Args:
+            chat_id: int
+            text: int
+        Returns:
+            SendMessageResponse
         """
 
         url = self.get_url('sendMessage')
